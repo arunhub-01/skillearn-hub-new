@@ -226,6 +226,49 @@ button:focus-visible {
     animation-duration: 0.01ms !important;
   }
 }
+.skill-controls {
+  display: flex;
+  gap: 12px;
+  margin: 0 0 12px;
+  flex-wrap: wrap;
+}
+
+.skill-controls input,
+.skill-controls select {
+  min-height: 48px;
+  padding: 12px 15px;
+  border: 1px solid #d9deec;
+  border-radius: 12px;
+  background: white;
+  color: #172033;
+  font: inherit;
+}
+
+.skill-controls input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.skill-controls select {
+  min-width: 190px;
+}
+
+#resultCount {
+  color: #64748b;
+  font-size: 14px;
+  margin: 0 0 16px;
+}
+
+@media (max-width: 520px) {
+  .skill-controls {
+    flex-direction: column;
+  }
+
+  .skill-controls input,
+  .skill-controls select {
+    width: 100%;
+  }
+}    
   </style>
 </head>
 <body>
@@ -240,8 +283,27 @@ button:focus-visible {
       <p>Choose a skill and start learning at your own pace.</p>
     </section>
 
-    <h2>Explore Skills</h2>
-    <section class="skills" id="skills"></section>
+<h2>Explore Skills</h2>
+
+<div class="skill-controls">
+  <input
+    type="search"
+    id="skillSearch"
+    placeholder="🔎 Search skills..."
+    aria-label="Search skills"
+  />
+
+  <select id="categoryFilter" aria-label="Filter skills by category">
+    <option value="all">All Categories</option>
+    <option value="design">Design</option>
+    <option value="technology">Technology</option>
+    <option value="business">Business</option>
+  </select>
+</div>
+
+<p id="resultCount" aria-live="polite"></p>
+
+<section class="skills" id="skills"></section>
     <section id="message" aria-live="polite"></section>
   </main>
 
@@ -305,6 +367,53 @@ card.appendChild(description);
       card.appendChild(button);
       skillsContainer.appendChild(card);
     });
+    const skillSearch = document.getElementById("skillSearch");
+const categoryFilter = document.getElementById("categoryFilter");
+const resultCount = document.getElementById("resultCount");
+
+function filterSkills() {
+  const searchText = skillSearch.value.toLowerCase().trim();
+  const category = categoryFilter.value;
+  const cards = skillsContainer.querySelectorAll(".card");
+  let visibleCount = 0;
+
+  cards.forEach(function(card) {
+    const title = card.querySelector("h3");
+    const name = title ? title.textContent.toLowerCase() : "";
+
+    let cardCategory = "business";
+
+    if (name.includes("design")) {
+      cardCategory = "design";
+    } else if (
+      name.includes("web") ||
+      name.includes("ai tools") ||
+      name.includes("excel") ||
+      name.includes("data entry") ||
+      name.includes("video editing")
+    ) {
+      cardCategory = "technology";
+    }
+
+    const matchesSearch = name.includes(searchText);
+    const matchesCategory =
+      category === "all" || category === cardCategory;
+
+    card.style.display =
+      matchesSearch && matchesCategory ? "" : "none";
+
+    if (matchesSearch && matchesCategory) {
+      visibleCount++;
+    }
+  });
+
+  resultCount.textContent =
+    "Showing " + visibleCount + " of " + cards.length + " skills";
+}
+
+skillSearch.addEventListener("input", filterSkills);
+categoryFilter.addEventListener("change", filterSkills);
+filterSkills();
   </script>
 </body>
 </html>
