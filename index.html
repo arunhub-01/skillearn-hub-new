@@ -263,8 +263,34 @@ button:focus-visible {
       const card = document.createElement("article");
       card.className = "card";
 
-      const title = document.createElement("h3");
-      title.textContent = skill;
+      const details = {
+  "Web Design": ["🎨", "Beautiful websites ka design seekho."],
+  "Video Editing": ["🎬", "Reels aur videos edit karna seekho."],
+  "Excel & Data Entry": ["📊", "Excel aur data entry skills seekho."],
+  "AI Tools": ["🤖", "AI tools se smart work karna seekho."],
+  "Graphic Design": ["🖌️", "Posters aur creative designs banao."],
+  "Web Development": ["💻", "Websites banana seekho."],
+  "Freelancing": ["💼", "Online clients aur projects paana seekho."]
+};
+
+const info = details[skill] || ["✨", "Nayi skill seekhna shuru karo."];
+
+const icon = document.createElement("div");
+icon.textContent = info[0];
+icon.style.fontSize = "36px";
+icon.style.marginBottom = "12px";
+
+const title = document.createElement("h3");
+title.textContent = skill;
+
+const description = document.createElement("p");
+description.textContent = info[1];
+description.style.color = "#64748b";
+description.style.marginBottom = "20px";
+
+card.appendChild(icon);
+card.appendChild(title);
+card.appendChild(description);
 
       const button = document.createElement("button");
       button.textContent = "Start Learning";
