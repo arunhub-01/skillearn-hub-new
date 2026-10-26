@@ -414,6 +414,120 @@ function filterSkills() {
 skillSearch.addEventListener("input", filterSkills);
 categoryFilter.addEventListener("change", filterSkills);
 filterSkills();
+    const lessonData = {
+  "Web Design": [
+    { title: "Lesson 1: Web Design kya hai?", content: "Web design mein website ka layout, colours, fonts aur page structure plan kiya jata hai. Achhe design mein readability aur simple navigation important hain.", task: "Practice: Ek website ke 3 sections likho — Header, Main Content aur Footer." },
+    { title: "Lesson 2: HTML Basics", content: "HTML website ka structure banata hai. Common tags: h1 heading ke liye, p paragraph ke liye, a link ke liye aur img image ke liye use hota hai.", task: "Practice: HTML mein ek heading aur ek paragraph banao." },
+    { title: "Lesson 3: CSS Basics", content: "CSS website ko style karta hai. Isse colours, spacing, borders aur layouts badal sakte ho. Example: h1 { color: blue; }", task: "Practice: Apni heading ka colour badlo." }
+  ],
+  "Video Editing": [
+    { title: "Lesson 1: Editing Basics", content: "Video editing mein clips ko arrange, trim aur combine kiya jata hai. Pehle project ratio select karo: Reels aur Shorts ke liye aam taur par 9:16.", task: "Practice: CapCut mein 3 clips import karke timeline par arrange karo." },
+    { title: "Lesson 2: Cuts and Transitions", content: "Trim se clip ki length kam hoti hai. Split se clip alag parts mein divide hoti hai. Transitions ko limited aur purpose ke saath use karo.", task: "Practice: Ek clip split karo aur unwanted part remove karo." },
+    { title: "Lesson 3: Audio and Export", content: "Music aur voice ka volume balance karo. Export se pehle video preview karo. Social videos ke liye 1080p aur suitable frame rate choose kar sakte ho.", task: "Practice: Music add karke 10-second sample export karo." }
+  ],
+  "Excel & Data Entry": [
+    { title: "Lesson 1: Spreadsheet Basics", content: "Excel mein rows numbers se aur columns letters se identify hote hain. Cell jaise A1 ek row aur column ke intersection ko kehte hain.", task: "Practice: Name, Department aur Salary ke columns banao." },
+    { title: "Lesson 2: Basic Formulas", content: "Formula hamesha = se start hota hai. =SUM(C2:C6) values ko add karta hai. =AVERAGE(C2:C6) average nikalta hai.", task: "Practice: 5 numbers enter karke SUM aur AVERAGE lagao." },
+    { title: "Lesson 3: Sort and Filter", content: "Sort data ko order mein arrange karta hai. Filter sirf matching rows dikhata hai. Data ko check karna aur spelling consistent rakhna bhi zaroori hai.", task: "Practice: Salary ko largest-to-smallest sort karo." }
+  ],
+  "AI Tools": [
+    { title: "Lesson 1: AI Basics", content: "AI tools writing, ideas, research aur planning mein help kar sakte hain. Output galat bhi ho sakta hai, isliye important facts verify karo.", task: "Practice: AI se ek study timetable banwane ka prompt likho." },
+    { title: "Lesson 2: Prompt Writing", content: "Achhe prompt mein task, context, format aur constraints clear hote hain. Example: 'Beginner ke liye 5-point Excel guide Hindi mein likho.'", task: "Practice: Apni pasand ke topic par clear prompt banao." },
+    { title: "Lesson 3: Verify the Output", content: "AI ke answers ko reliable sources se check karo. Passwords, private documents aur sensitive information public AI tools mein share mat karo.", task: "Practice: AI ke ek factual answer ko trusted source se verify karo." }
+  ],
+  "Graphic Design": [
+    { title: "Lesson 1: Design Principles", content: "Strong design mein hierarchy, contrast, alignment aur spacing important hote hain. Viewer ko sabse pehle kya dikhna chahiye, ye decide karo.", task: "Practice: Ek poster ka main heading aur supporting text plan karo." },
+    { title: "Lesson 2: Colours and Fonts", content: "Limited colour palette use karo aur text readable rakho. Heading aur body ke liye do complementary fonts se shuru kar sakte ho.", task: "Practice: Ek poster ke liye 3 colours choose karo." },
+    { title: "Lesson 3: Create a Poster", content: "Poster mein clear heading, relevant visual aur useful information rakho. Export karne se pehle spelling, alignment aur image quality check karo.", task: "Practice: Ek event ya gaming poster design karo." }
+  ],
+  "Web Development": [
+    { title: "Lesson 1: HTML Structure", content: "HTML page mein aam taur par doctype, html, head aur body elements hote hain. Visible page content body ke andar hota hai.", task: "Practice: Ek page banao jisme heading aur paragraph ho." },
+    { title: "Lesson 2: CSS and Layout", content: "CSS colours, spacing aur layout control karta hai. Flexbox aur Grid se responsive layouts banaye ja sakte hain.", task: "Practice: Do cards ko CSS Grid se side-by-side dikhao." },
+    { title: "Lesson 3: JavaScript Basics", content: "JavaScript page ko interactive banata hai, jaise button click par message dikhana. Browser console errors dhoondhne mein help karta hai.", task: "Practice: Button click par ek welcome message dikhane ka demo banao." }
+  ],
+  "Freelancing": [
+    { title: "Lesson 1: Choose a Service", content: "Ek clear service choose karo, jaise short-form video editing, data entry ya graphic design. Client ko batao ki tum kya deliver karoge.", task: "Practice: Apni service aur ideal client ek sentence mein likho." },
+    { title: "Lesson 2: Build a Portfolio", content: "Portfolio mein apne best sample projects, service details aur contact method rakho. Sirf apna asli work dikhana aur client permission ka dhyan rakhna.", task: "Practice: Apne best 3 sample projects ki list banao." },
+    { title: "Lesson 3: Find Clients", content: "Relevant clients ko personalised message bhejo, unki needs samjho aur clear price, deadline aur revisions agree karo. Payment aur scope pehle confirm karo.", task: "Practice: Ek potential client ke liye short, professional pitch likho." }
+  ]
+};
+
+const lessonPanel = document.createElement("section");
+lessonPanel.id = "lessonPanel";
+lessonPanel.style.cssText = "display:none; margin:24px 0; padding:24px; background:#fff; color:#172033; border:1px solid #d9deec; border-radius:16px; box-shadow:0 8px 24px #00000010;";
+
+lessonPanel.innerHTML = `
+  <h2 id="lessonSkill"></h2>
+  <p id="lessonProgress"></p>
+  <h3 id="lessonTitle"></h3>
+  <p id="lessonContent" style="line-height:1.8; white-space:pre-line"></p>
+  <p id="lessonTask" style="background:#eef2ff; padding:14px; border-radius:10px; line-height:1.6"></p>
+  <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:18px">
+    <button type="button" id="prevLesson">← Previous</button>
+    <button type="button" id="nextLesson">Next →</button>
+    <button type="button" id="closeLessons">Close Lessons</button>
+  </div>
+`;
+
+skillsContainer.insertAdjacentElement("afterend", lessonPanel);
+
+let currentSkill = "";
+let currentLesson = 0;
+
+function showLesson() {
+  const lessons = lessonData[currentSkill];
+  const lesson = lessons[currentLesson];
+
+  lessonPanel.style.display = "block";
+  document.getElementById("lessonSkill").textContent = currentSkill;
+  document.getElementById("lessonProgress").textContent =
+    "Lesson " + (currentLesson + 1) + " of " + lessons.length;
+  document.getElementById("lessonTitle").textContent = lesson.title;
+  document.getElementById("lessonContent").textContent = lesson.content;
+  document.getElementById("lessonTask").textContent = lesson.task;
+
+  document.getElementById("prevLesson").disabled = currentLesson === 0;
+  document.getElementById("nextLesson").textContent =
+    currentLesson === lessons.length - 1 ? "Finish ✓" : "Next →";
+
+  lessonPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+skillsContainer.querySelectorAll(".card").forEach(function(card) {
+  const title = card.querySelector("h3");
+  const button = card.querySelector("button");
+
+  if (!title || !button || !lessonData[title.textContent]) return;
+
+  button.addEventListener("click", function() {
+    currentSkill = title.textContent;
+    currentLesson = 0;
+    showLesson();
+  });
+});
+
+document.getElementById("prevLesson").addEventListener("click", function() {
+  if (currentLesson > 0) {
+    currentLesson--;
+    showLesson();
+  }
+});
+
+document.getElementById("nextLesson").addEventListener("click", function() {
+  if (currentLesson < lessonData[currentSkill].length - 1) {
+    currentLesson++;
+    showLesson();
+  } else {
+    document.getElementById("lessonProgress").textContent =
+      "All lessons completed for " + currentSkill + "! 🎉";
+    document.getElementById("nextLesson").disabled = true;
+  }
+});
+
+document.getElementById("closeLessons").addEventListener("click", function() {
+  lessonPanel.style.display = "none";
+  document.getElementById("nextLesson").disabled = false;
+});
   </script>
 </body>
 </html>
