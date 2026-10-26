@@ -269,6 +269,162 @@ button:focus-visible {
     width: 100%;
   }
 }    
+  /* SkillEarn Hub - Professional UI Upgrade */
+:root {
+  --seh-bg: #f5f7ff;
+  --seh-card: #ffffff;
+  --seh-text: #172033;
+  --seh-muted: #64748b;
+  --seh-primary: #4f46e5;
+  --seh-primary-dark: #3730a3;
+  --seh-border: #e2e8f0;
+  --seh-radius: 18px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--seh-bg);
+  color: var(--seh-text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+p {
+  overflow-wrap: anywhere;
+}
+
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
+  gap: 22px;
+  align-items: stretch;
+}
+
+.card {
+  background: var(--seh-card);
+  border: 1px solid var(--seh-border);
+  border-radius: var(--seh-radius);
+  padding: 24px;
+  box-shadow: 0 5px 20px rgba(30, 41, 59, 0.05);
+  transition: transform 180ms ease, box-shadow 180ms ease,
+    border-color 180ms ease;
+  min-width: 0;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(30, 41, 59, 0.1);
+  border-color: #c7d2fe;
+}
+
+button {
+  background: var(--seh-primary);
+  color: white;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 18px;
+  min-height: 44px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+button:hover:not(:disabled) {
+  background: var(--seh-primary-dark);
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+input, select, textarea {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 3px solid #a5b4fc;
+  outline-offset: 3px;
+}
+
+#lessonPanel {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+#lessonPanel p {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 15px;
+  }
+
+  .card {
+    padding: 19px;
+  }
+
+  .skills {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+  }
+
+  #lessonPanel {
+    padding: 18px !important;
+  }
+
+  #lessonPanel button {
+    flex: 1 1 120px;
+  }
+
+  .skill-controls {
+    flex-direction: column;
+  }
+
+  .skill-controls input,
+  .skill-controls select {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
   </style>
 </head>
 <body>
